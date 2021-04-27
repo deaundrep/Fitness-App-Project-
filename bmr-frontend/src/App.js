@@ -1,6 +1,6 @@
 import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
-import red  from "@material-ui/core/colors/red";
+import green  from "@material-ui/core/colors/green";
 import { BrowserRouter as Router } from "react-router-dom";
 import MainRouter from "./MainRouter";
 import React from "react";
@@ -13,11 +13,11 @@ import React from "react";
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: red[500],
-      contrastText: "#fff",
+      main: green[600],
+      contrastText: "#ffeb3b",
     },
     secondary: {
-      main: "#FFF5EE",
+      main: "#ffeb3b",
       contrastText: "black",
     },
   },

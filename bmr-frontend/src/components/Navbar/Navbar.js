@@ -23,7 +23,7 @@ function Navbar() {
             <AppBar position="static">
                 <Toolbar>
                     <Typography variant="h6" className={classes.title}>
-                        Fitness Center
+                        High Performance Fitness 
             </Typography>
 
                     <NavLink
@@ -41,7 +41,7 @@ function Navbar() {
                         className="nav-link"
                         activeClassName="active-nav-link"
                     >
-                        <Button color="inherit">Sign up</Button>
+                        <Button color="inherit">Register</Button>
                     </NavLink>
                 </Toolbar>
             </AppBar>

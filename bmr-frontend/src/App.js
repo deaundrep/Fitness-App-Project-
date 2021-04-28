@@ -2,6 +2,7 @@ import { createMuiTheme } from "@material-ui/core/styles";
 import { ThemeProvider } from "@material-ui/styles";
 import green  from "@material-ui/core/colors/green";
 import { BrowserRouter as Router } from "react-router-dom";
+import Spinner from "./components/Spinner/Spinner";
 import MainRouter from "./MainRouter";
 import React from "react";
 
@@ -30,9 +31,11 @@ const theme = createMuiTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
-    <Router>
+      <React.Suspense fallback={<Spinner />}>
+        <Router>
           <MainRouter />
         </Router>
+      </React.Suspense>
     </ThemeProvider>
   );
 }

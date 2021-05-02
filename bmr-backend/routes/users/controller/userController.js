@@ -1,78 +1,94 @@
-const User = require("../model/User");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 
-const signUp = async (req, res) => {
-    try {
-        let genSalt = await bcrypt.genSalt(12);
-        let hashedPassword = await bcrypt.hash(req.body.password, genSalt);
-
-        let createdUser = new User({
-            email: req.body.email,
-            username: req.body.username,
-            password: hashedPassword,
-        });
-
-        let savedCreatedUser = await createdUser.save();
-
-        res.json({
-            message: "User created",
-            user: savedCreatedUser,
-        });
-    } catch (e) {
-        res.status(500).json({ message: e.message });
-    }
-};
-
-const login = async (req, res) => {
-    try {
-        let foundUser = await User.findOne({ email: req.body.email });
-
-        if (!foundUser) {
-            throw { message: "User not found! please so sign up!" };
-        }
-
-        let comparedPassword = await bcrypt.compare(
-            req.body.password,
-            foundUser.password
-        );
-
-        if (!comparedPassword) {
-            throw { message: "Please check your email and password!" };
-        }
-
-        let jwtToken = jwt.sign(
-            {
-                email: foundUser.email,
-                username: foundUser.username,
-            },
-            process.env.JWT_SECRET_STRING,
-            {
-                expiresIn: "1d",
-            }
-        );
-
-        res.json({
-            jwtToken,
-        });
-    } catch (e) {
-        res.status(500).json({ message: e.message });
-    }
-};
-
-const updateProfile = async (req, res) => {
-    try {
-        res.json({
-            message: "Update route success",
-            user: req.user,
-        });
-    } catch (e) {
-        res.status(500).json({ message: e.message });
-    }
-};
+const User = require("../Model/User");
+const mongoDBErrorHelper = require("../../lib/mongoDBErrorHelper");
 
 module.exports = {
-    signUp,
-    login,
-    updateProfile,
-};
+    signUp: async (req, res) => {
+        try {
+            let salted = await bcrypt.genSalt(10);
+            let hashedPassword = await bcrypt.hash(req.body.password, salted);
+            let createdUser = new User({
+                email: req.body.email,
+                userName: req.body.userName,
+                firstName: req.body.firstName,
+                lastName: req.body.lastName,
+                password: hashedPassword,
+            });
+            let savedUser = await createdUser.save();
+            res.json({
+                data: savedUser,
+            });
+        } catch (e) {
+            res.status(500).json(mongoDBErrorHelper(e));
+
+        }
+    },
+    login: async (req, res) => {
+        try {
+            let foundUser = await User.findOne({ email: req.body.email });
+
+            if (!foundUser) {
+                throw { message: "Email is not registered, please go sign up!" };
+            }
+
+            let comparedPassword = await bcrypt.compare(
+                req.body.password,
+                foundUser.password
+            );
+
+            if (!comparedPassword) {
+                throw { message: "Check your email and password!" };
+            } else {
+                let jwtToken = jwt.sign(
+                    {
+                        email: foundUser.email,
+                    },
+                    process.env.JWT_VERY_SECRET,
+                    { expiresIn: "1d" }
+                );
+
+                res.json({
+                    jwtToken: jwtToken,
+                });
+            }
+        } catch (e) {
+            res.status(500).json(mongoDBErrorHelper(e));
+        }
+    },
+    updateUserPassword: async (req, res) => {
+        try {
+            let foundUser = await User.findOne({ email: req.body.email });
+
+            if (!foundUser) {
+                throw { message: "User not found!!!!" };
+            }
+
+            let comparedPassword = await bcrypt.compare(
+                req.body.oldPassword,
+                foundUser.password
+            );
+
+            if (!comparedPassword) {
+                throw { message: "Cannot update your password, check again" };
+            }
+
+            let salted = await bcrypt.genSalt(10);
+            let hashedNewPassword = await bcrypt.hash(req.body.newPassword, salted);
+
+            await User.findOneAndUpdate(
+                { email: req.body.email },
+                { password: hashedNewPassword },
+                { new: true }
+            );
+
+            res.json({
+                message: "success",
+                payload: true,
+            });
+        } catch (e) {
+            res.status(500).json(mongoDBErrorHelper(e));
+        }
+    },
+}

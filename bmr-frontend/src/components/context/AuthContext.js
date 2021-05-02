@@ -4,7 +4,6 @@ export const AuthContext = React.createContext({});
 
 const initialState = {
     isAuth: false,
-    user: null,
 };
 
 function reducerFunc(state, action) {
@@ -12,16 +11,11 @@ function reducerFunc(state, action) {
         case "LOGIN":
             return {
                 isAuth: true,
-                user: {
-                    email: action.user.email,
-                },
             };
         case "LOGOUT":
             return {
                 isAuth: false,
-                user: null,
             };
-
         default:
             return state;
     }

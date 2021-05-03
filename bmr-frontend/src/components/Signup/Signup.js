@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
+import axios from "axios";
 
 import {
     FormControl,
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-function Signup() {
+function Signup(props) {
     const classes = useStyles();
 
     const [isButtonDisabled, setIsButtonDisabled] = useState(true);
@@ -77,13 +78,25 @@ function Signup() {
         handlePasswordOnBlur,
     ] = usePasswordHooks();
 
-    function handleOnSubmit(e) {
+    async function handleOnSubmit(e) {
         e.preventDefault();
-        console.log(username);
-        console.log(firstName);
-        console.log(email);
-        console.log(lastName);
-        console.log(password);
+        console.log(email, username, firstName, lastName, password);
+        try{
+            let result = await axios.post("http://localhost:3005/users/sign-up",{
+                email,
+                username,
+                firstName,
+                lastName,
+                password,
+
+            });
+            console.log(result)
+            props.history.push('/login')
+
+        } catch(e){
+            console.log(e)
+
+        }
     }
 
     useEffect(() => {

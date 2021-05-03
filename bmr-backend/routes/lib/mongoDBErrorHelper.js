@@ -1,6 +1,5 @@
 const getUniqueErrorMessage = (err) => {
     let output;
-
     try {
         let errorMessage = err.message;
 

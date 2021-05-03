@@ -88,7 +88,6 @@ const checkLoginIsEmpty = (req, res, next) => {
     if (checkIfEmpty(email)) {
         errorObj.email = "Email cannot be empty";
     }
-
     if (checkIfEmpty(password)) {
         errorObj.password = "Password cannot be empty";
     }

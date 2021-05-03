@@ -25,6 +25,24 @@ function Navbar() {
                     <Typography variant="h6" className={classes.title}>
                         High Performance Fitness 
             </Typography>
+            <NavLink
+                        to="/"
+                        exact
+                        className="nav-link"
+                        activeClassName="active-nav-link"
+                    >
+                        <Button color="inherit">Home</Button>
+                    </NavLink>
+
+                    <NavLink
+                        to="/profile"
+                        exact
+                        className="nav-link"
+                        activeClassName="active-nav-link"
+                    >
+                        <Button color="inherit">Profile</Button>
+                    </NavLink>
+
 
                     <NavLink
                         to="/login"

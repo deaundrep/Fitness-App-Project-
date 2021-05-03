@@ -45,20 +45,20 @@ function Profile() {
         }
     };
 
-    useEffect(() => {
-        if (inputEmailError === false && inputPasswordError === false) {
-            setIsButtonDisabled(false);
-        } else {
-            setIsButtonDisabled(true);
-            return;
-        }
+    // useEffect(() => {
+    //     if (height === false && weight === false) {
+    //         setIsButtonDisabled(false);
+    //     } else {
+    //         setIsButtonDisabled(true);
+    //         return;
+    //     }
     
-        if (height.length == 0 || weight.length == 0) {
-            setIsButtonDisabled(true);
-        } else {
-            setIsButtonDisabled(false);
-        }
-    }, [height, weight]);
+    //     if (height.length == 0 || weight.length == 0) {
+    //         setIsButtonDisabled(true);
+    //     } else {
+    //         setIsButtonDisabled(false);
+    //     }
+    // }, [height, weight]);
 
     
 
@@ -95,7 +95,7 @@ function Profile() {
                         <Input
                             id="component-weight"
                             name="weight"
-                            value={height}
+                            value={weight}
                             onChange={(e) => setWeight(e.target.value)}
                             placeholder="weight in cm"
                         />
@@ -107,7 +107,7 @@ function Profile() {
 						variant="contained"
 						color="primary"
 						type="submit"
-						disabled={isButtonDisabled}>
+						onClick={handleBmi}>
 						Calculate
 					</Button>
                     <h1>{bmi}</h1>

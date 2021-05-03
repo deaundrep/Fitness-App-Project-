@@ -10,25 +10,25 @@ function useBmiHooks() {
     const [weight, setWeight] = useState();
 
     
-    function handleEmailOnChange(e) {
-        let emailInputValue = e.target.value;
-        setEmail(emailInputValue);
+    function handleBmiOnChange(e) {
+        let bmiInputValue = e.target.value;
+        setBmi(bmiInputValue);
 
-        if (isEmail(emailInputValue)) {
-            setIsEmailError(false);
+        if (isBmi(bmiInputValue)) {
+            setIsBmiError(false);
             setErrorMessage("");
         } else {
-            setIsEmailError(true);
-            setErrorMessage("Please enter a valid email");
+            setIsBmiError(true);
+            setErrorMessage("Please enter a valid Bmi");
         }
     }
 
-    function handleEmailOnBlur() {
-        setIsEmailOnBlur(true);
+    function handleBmiOnBlur() {
+        setIsBmiOnBlur(true);
 
-        if (email.length === 0) {
+        if (bmi.length === 0) {
             setIsEmailError(true);
-            setErrorMessage("Email cannot be empty");
+            setErrorMessage("bmi cannot be empty");
         } else {
             setIsEmailError(false);
             setErrorMessage("");

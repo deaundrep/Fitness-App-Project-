@@ -10,8 +10,7 @@ import {
 	Input,
 	InputLabel,
 	Button,
-	CircularProgress,
-	Snackbar,
+	
 	Grid,
 } from "@material-ui/core";
 
@@ -41,7 +40,7 @@ function Login(props) {
 		setPassword,
 		inputPasswordError,
 		errorPasswordMessage,
-		isPasswordOnBlur,
+		//isPasswordOnBlur,
 		handlePasswordOnBlur,
 	] = usePasswordHooks();
     
